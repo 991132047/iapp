@@ -1,0 +1,104 @@
+<ion-view view-title="豆荚记账">
+  <ion-content class="dash">
+    <div ng-click="openp()" class="my-date col">
+      {{ info.date | date :"yyyy年 MM月 dd日" }}
+    </div>
+    </div>
+    <!-- 物品 分类 -->
+    <ion-slide-box>
+      <ion-slide>
+        <div class="my-list">
+          <div class="title">支出类</div>
+          <div ng-repeat="item in classif[0]" ng-click="set(0, $index)" ng-class="{
+            'dark-bg': info.class != 0 || info.subClass != $index,
+            'assertive-bg': info.class == 0 && info.subClass == $index,
+            'active': info.class == 0 && info.subClass == $index
+          }" class="my-item">
+            {{ item }}
+          </div>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="my-list">
+          <div class="title">收入类</div>
+          <div ng-repeat="item in classif[1]" ng-click="set(1, $index)" ng-class="{
+            'dark-bg': info.class != 1 || info.subClass != $index,
+            'positive-bg': info.class == 1 && info.subClass == $index,
+            'active': info.class == 1 && info.subClass == $index
+          }" class="my-item">
+            {{ item }}
+          </div>
+        </div>
+      </ion-slide>
+    </ion-slide-box>
+    <!-- 计算机 显示 -->
+     <div class="my-value">
+      <div class="my-class">
+        <div ng-class="{'assertive': !info.class,'positive': info.class}" class="">
+          <i ng-class="{'ion-navigate': info.class == 0,'ion-android-pin': info.class == 1}" class="icon"></i> {{ classif[info.class][info.subClass] }}
+        </div>
+      </div>
+      {{ info.value }}
+    <!-- 计算器 -->
+    <div class="list my-calc">
+      <div class="item row">
+        <div class="col"><a ng-click="N('7')">7</a></div>
+        <div class="col"><a ng-click="N('8')">8</a></div>
+        <div class="col"><a ng-click="N('9')">9</a></div>
+        <div class="col"><a ng-click="C()">清空</a></div>
+      </div>
+      <div class="item row">
+        <div class="col"><a ng-click="N('4')">4</a></div>
+        <div class="col"><a ng-click="N('5')">5</a></div>
+        <div class="col"><a ng-click="N('6')">6</a></div>
+        <div class="col"><a ng-click="B()">删除</a></div>
+      </div>
+      <div class="item row">
+        <div class="col"><a ng-click="N('1')">1</a></div>
+        <div class="col"><a ng-click="N('2')">2</a></div>
+        <div class="col"><a ng-click="N('3')">3</a></div>
+        <div class="col"><a ng-click="I()" ng-show="info.value > 0">输入</a></div>
+      </div>
+      <div class="item row">
+        <div class="col"><a ng-click="N('00')">00</a></div>
+        <div class="col"><a ng-click="N('0')">0</a></div>
+        <div class="col"><a ng-click="P()">.</a></div>
+        <div class="col"><a ng-click="F()">结束</a></div>
+      </div>
+    </div>
+    <!--  账单  -->
+    <ion-list>
+      <ion-item class="item-divider row">
+        <div class="col text-center">￥ 本月收入</div>
+        <div class="col text-center">￥ 本月支出</div>
+        <div class="col text-center">￥ 本月盈余</div>
+      </ion-item>
+      <ion-item class="row">
+        <div class="col text-right positive">
+          <b>{{ sum[1] | currency :"" }}</b> &nbsp;
+        </div>
+        <div class="col text-right assertive">
+          <b>{{ sum[0] | currency :"" }}</b> &nbsp;
+        </div>
+        <div class="col text-right royal">
+          <b>{{ sum[2] | currency :"" }}</b> &nbsp;
+        </div>
+      </ion-item>
+      <!--<ion-item class="item-divider row">
+        <div class="col text-center">账单日期</div>
+        <div class="col text-center">收支类别</div>
+        <div class="col text-right">￥ 金额 &nbsp;</div>
+      </ion-item>-->
+      <!--<ion-item ng-repeat="row in data | orderBy :'-date'" on-hold="delete(row.id)" class="item-divider row ">
+        <div class="col text-center">{{ row.date | date :"yyyy-MM-dd" }}</div>
+        <div class="col text-center">{{ classif[row.class][row.subClass] }}</div>
+        <div ng-class="{
+          'positive': row.class,
+          'assertive': !row.class
+        }" class="col text-right">
+          {{ row.value | currency :"" }} &nbsp;
+        </div>
+      </ion-item>-->
+    </ion-list>
+  </ion-content>
+</ion-view>

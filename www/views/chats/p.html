@@ -1,0 +1,39 @@
+<ion-view view-title="豆荚记账">
+  <ion-content class="chats">
+    <ion-refresher on-refresh="down()" pulling-text="下拉刷新"></ion-refresher>
+    <ion-list>
+      <div ng-click="J()" class="button button-full button-assertive">记一笔</div>
+      <ion-item class="item-divider row">
+        <div class="col text-center">￥ 本月收入</div>
+        <div class="col text-center">￥ 本月支出</div>
+        <div class="col text-center">￥ 本月盈余</div>
+      </ion-item>
+      <ion-item class="row">
+        <div class="col text-right positive">
+          <b>{{ sum[1] | currency :"" }}</b> &nbsp;
+        </div>
+        <div class="col text-right assertive">
+          <b>{{ sum[0] | currency :"" }}</b> &nbsp;
+        </div>
+        <div class="col text-right royal">
+          <b>{{ sum[2] | currency :"" }}</b> &nbsp;
+        </div>
+      </ion-item>
+      <ion-item class="item-divider row">
+        <div class="col text-center">账单日期</div>
+        <div class="col text-center">收支类别</div>
+        <div class="col text-right">￥ 金额 &nbsp;</div>
+      </ion-item>
+      <ion-item ng-repeat="row in data | orderBy :'-date'" on-hold="delete(row.id)" class="item-divider row ">
+        <div class="col text-center">{{ row.date | date :"yyyy-MM-dd" }}</div>
+        <div class="col text-center">{{ classif[row.class][row.subClass] }}</div>
+        <div ng-class="{
+          'positive': row.class,
+          'assertive': !row.class
+        }" class="col text-right">
+          {{ row.value | currency :"" }} &nbsp;
+        </div>
+      </ion-item>
+    </ion-list>   
+  </ion-content>
+</ion-view>
